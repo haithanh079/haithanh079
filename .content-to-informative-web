@@ -1,0 +1,98 @@
+Web Page Generation from Various Information Sources (Refined for Engagement & Memorability)
+
+**Phase 1: Input Ingestion, Analysis, and Structuring**
+-------------------------------------------------------
+INSTRUCTION: Receive and process the provided information to extract key elements suitable for web page content.
+DATA_SOURCE: User-provided input (e.g., uploaded paper, pasted text, raw data, link to content).
+ACCEPTABLE_INPUT_TYPES:
+    - Raw text (unstructured, semi-structured like articles, essays).
+    - Formatted documents (e.g., .txt, .md, potentially .pdf or .docx if pre-processing/conversion capabilities are invoked).
+    - Structured data (e.g., JSON, CSV that can be interpreted for presentation).
+    - Outputs from other internal modules (e.g., summaries, research data).
+
+INITIAL_PROCESSING_SUB_STEPS:
+    1.  CONTENT_INGESTION: Load the provided input data.
+    2.  PRELIMINARY_ANALYSIS:
+        -   Identify the nature of the input.
+        -   Perform Natural Language Understanding (NLU) to comprehend the content, identify main topics, sub-topics, key arguments, entities, and relationships critical for an **informative** output.
+        -   If the input is a document, parse its structure (title, headings, paragraphs, lists, tables, figures, abstract, conclusion, references).
+        -   If the input is tabular data, identify headers and row data.
+    3.  INFORMATION_EXTRACTION_AND_SYNTHESIS_FOR_CLARITY:
+        -   Extract a plausible main title or subject for the web page.
+        -   Identify and delineate distinct sections or topics. Prioritize a logical flow that aids understanding and recall.
+        -   Summarize key information concisely for each section.
+        -   Identify lists, core facts, or data points that are crucial and should be presented for easy memorization.
+        -   Note inherent structure (chronological, problem-solution, comparative) to inform layout.
+        -   Consider if a "Key Takeaways" or "In Summary" section can be generated from the core information.
+
+TARGET_INTERNAL_DATA_STRUCTURE (Output of this Phase, input for Phase 2+):
+    - overall_summary: String (A concise, **informative** overview)
+    - main_title_suggestion: String
+    - key_topics: Array of Objects, each ideally with:
+        - topic_title: String
+        - topic_content: String or Structured_Block (Optimized for readability: shorter paragraphs, bullet points for lists)
+        - related_data_tables: Array of Objects
+        - relevant_media_descriptors: Array of Strings
+        - importance_flag: Boolean (to highlight very critical sections if applicable)
+    - key_takeaways_summary: String (Optional, based on synthesis)
+    - conclusion_summary: String
+    - source_information: String or Object
+
+**Phase 2: Core Objective**
+---------------------------
+INSTRUCTION: Convert the processed and structured information (from Phase 1) into a single, well-structured HTML web page that is **highly informative, visually engaging, and designed for easy comprehension and recall.**
+OUTPUT_FORMAT: HTML5 document with embedded CSS.
+PRIMARY_GOAL: Maximize user understanding and retention of the core information through clear presentation and appealing design.
+
+**Phase 3: Content Mapping & HTML Structure Generation (Focus on Clarity & Memorability)**
+------------------------------------------------------------------------------------------
+INSTRUCTION: Map structured data elements to appropriate HTML5 semantic tags, prioritizing information hierarchy and ease of understanding.
+GUIDELINES:
+    1.  PAGE_TITLE: Use `main_title_suggestion` for `<title>` and main `<h1>`.
+    2.  MAIN_CONTENT_AREA: Use `<main>` and `<article>`.
+    3.  OVERVIEW: Present `overall_summary` clearly at the beginning.
+    4.  SECTIONS_HEADINGS: For `key_topics`:
+        -   `<h2>` for `topic_title`. Ensure titles are concise and descriptive.
+        -   Present `topic_content` using short paragraphs (`<p>`), bulleted lists (`<ul>`) for key points/features, and numbered lists (`<ol>`) for sequential information. This aids scannability and memorability.
+        -   If `importance_flag` is true for a topic, consider subtle structural emphasis (e.g., an additional class for potential styling highlights).
+    5.  KEY_TAKEAWAYS: If `key_takeaways_summary` is generated, present it prominently (e.g., in a styled `aside` or a dedicated section with `<h3>`).
+    6.  DATA_TABLES: Render `related_data_tables` responsively. Highlight key data points if identifiable.
+    7.  IMAGES/MEDIA: Embed media relevantly. Ensure `alt` text is descriptive.
+    8.  CONCLUSION: Present `conclusion_summary`.
+    9.  CITATIONS/SOURCES: List `source_information` if applicable.
+
+**Phase 4: Styling & Layout (CSS Generation - Focus on Engagement & Readability)**
+---------------------------------------------------------------------------------
+INSTRUCTION: Generate embedded CSS to create a visually appealing, **moderately colorful,** readable, and engaging user experience that supports information retention.
+STYLE_PROFILE: "Modern, Clean & Engaging Informational"
+CSS_GUIDELINES:
+    1.  RESPONSIVENESS: Ensure a fluid layout for all devices.
+    2.  TYPOGRAPHY:
+        -   Use highly legible sans-serif fonts for body; consider a complementary, slightly more distinct font for headings.
+        -   Ensure excellent contrast between text and background.
+        -   Employ font weight and subtle size variations to establish clear visual hierarchy for headings, subheadings, and body text, guiding the user's attention to key information.
+    3.  COLOR_PALETTE:
+        -   Base: Use a clean, light background (e.g., white or off-white) for main content areas to maximize readability.
+        -   Accent Colors: Introduce a harmonious set of 2-3 **subtle but engaging accent colors.** Use these sparingly for elements like headings, links, blockquotes, or highlights for "Key Takeaways" sections to draw attention without overwhelming. Avoid overly bright or distracting primary colors for large text blocks.
+        -   Ensure all color combinations meet accessibility contrast standards (WCAG AA).
+    4.  SPACING & VISUAL_BREAKS: Implement generous margins, padding, and line height. Use white space effectively to break up content and improve scannability.
+    5.  ELEMENT_STYLING:
+        -   Style headings to be distinct.
+        -   Ensure links are clearly identifiable.
+        -   Style lists for easy scanning.
+        -   Tables should be clean and easy to read.
+        -   Consider subtle box shadows or borders for elements like callouts or image containers to add depth.
+    6.  IMAGES: Ensure images are well-integrated. Add slight rounded corners or subtle borders if it enhances the aesthetic.
+
+**Phase 5: Code Quality & Validation**
+--------------------------------------
+INSTRUCTION: Ensure generated HTML and CSS are valid, adhere to web standards, and meet accessibility guidelines.
+CHECKS:
+    -   Valid HTML5 & CSS.
+    -   Semantic HTML.
+    -   Accessibility (WCAG AA): color contrast, alt text, keyboard navigation considerations (if JS is ever introduced).
+    -   Responsiveness across common viewport sizes.
+
+**Phase 6: Output**
+-------------------
+INSTRUCTION: Return the complete HTML document (with embedded CSS) as a single string.
